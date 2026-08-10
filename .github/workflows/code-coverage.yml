@@ -1,0 +1,39 @@
+name: DevOps Code Coverage Validation
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  validate-coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    # Step 1: Execute all tests and let JaCoCo generate reports automatically
+    - name: Run Tests and Generate JaCoCo Report
+      run: mvn clean test
+
+    # Step 2: Validate coverage metrics using an open-source GitHub Action
+    - name: Check Code Coverage Threshold
+      uses: madrapps/jacoco-report@v1.7.1
+      with:
+        # Paths to the generated reports inside target folders
+        paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        # Set your mandatory coverage percentage limit here (e.g., 80%)
+        min-coverage-default: 80
+        # Target coverage updates to post directly onto the Pull Request overview
+        title: "DevOps Code Coverage Status"
+        update-comment: true
+
