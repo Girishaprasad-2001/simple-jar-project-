@@ -32,6 +32,7 @@ If you want to speed up your local workflow or bypass certain phases, use these 
 
 *   **`mvn exec:java -Dexec.mainClass="Main"`**: Runs your application's `main` method immediately without packaging it into a JAR first.
 *   **`mvn clean package -DskipTests`**: Compiles and bundles your executable JAR file immediately, completely skipping the execution of your unit tests to save time.
+*   **`mvn clean package -Dmaven.test.skip=true: The -DskipTests flag still compiles your test files to make sure there are no syntax errors, but it does not execute them. If you want to skip both compiling and running your tests entirely to make the build even faster, use this flag
 
 ---
 
