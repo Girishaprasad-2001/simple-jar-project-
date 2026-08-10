@@ -121,4 +121,55 @@ A comprehensive reference guide for managing local branches, undoing changes, sy
 *   `git checkout -b <new-branch-name>`: Creates a brand-new local branch and switches you to it immediately.
 *   `git checkout <commit-hash>`: Moves your workspace to a specific point in time (puts you in a "detached HEAD" state).
 *   `git checkout -- <file-name>`: Discards local uncommitted changes in a specific file, reverting it back to the last commit.
+### Essential Cherry-Pick Commands
+* **`git cherry-pick <commit-hash>`**: Applies the changes from a single, specific commit onto your current active branch.
+* **`git cherry-pick <commit-A> <commit-B>`**: Applies multiple specific, separate commits in one command.
+* **`git cherry-pick <commit-A>..<commit-B>`**: Applies a continuous range of commits from Commit A up to Commit B (Commit A is excluded).
+* **`git cherry-pick <commit-A>^..<commit-B>`**: Applies a continuous range of commits, including Commit A all the way through Commit B.
+* **`git cherry-pick -n <commit-hash>`**: Applies the changes to your working directory and staging area, but does not create the commit automatically. This lets you inspect or modify the changes first.
 
+### How to Handle Cherry-Pick Conflicts
+If the code changes clash with your current branch, Git will pause and ask you to fix them. Use these commands to manage the pause state:
+* **`git cherry-pick --continue`**: Resumes the process after you manually resolve the code conflicts and stage the files (`git add`).
+* **`git cherry-pick --skip`**: Skips the current conflicting commit entirely and moves on to the next one in your queue.
+* **`git cherry-pick --abort`**: Cancels the entire operation completely and returns your branch to exactly how it looked before you started.
+
+---
+
+### Terminal Shell Redirections
+The command `echo " devops" >> devops` is a standard terminal shell command (not a Git command) used to append text to a file.
+
+* **`>>` (Append)**: Adds text to the end of the file safely.
+* **`>` (Overwrite)**: Wipes out the entire file and replaces it with the new text.
+
+---
+
+### Deployment Manifest Template
+You can generate your Kubernetes configuration using this block:
+
+```bash
+cat << 'EOF' > deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  labels:
+    app: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+EOF
+\`\`\`
+EOF
