@@ -1,0 +1,57 @@
+name: DevOps PR Validation & Merge Check
+
+# Trigger this pipeline strictly on pull request activity targeting your primary branches
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches: [ "main", "master", "develop" ]
+
+jobs:
+  # Job 1: Proactively test for git merge conflicts and branch readiness
+  merge-and-conflict-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout pull request code branch
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Fetches full git commit history to accurately calculate mergeability
+
+    - name: Verify PR Merge Compatibility
+      run: |
+        echo "Validating git state for Pull Request..."
+        
+        # Check GitHub's automatic mergeable flag via the context payload data
+        MERGEABLE_STATE="${{ github.event.pull_request.mergeable_state }}"
+        
+        echo "Calculated Mergeable State from GitHub Context: $MERGEABLE_STATE"
+        
+        if [ "$MERGEABLE_STATE" = "conflicting" ]; then
+          echo "❌ DEVOPS ERROR: Merge conflicts discovered! Please rebase or merge destination branch locally."
+          exit 1
+        fi
+        
+        echo "✅ Validation Passed: No breaking merge conflicts detected."
+
+  # Job 2: Run core build validation to ensure new code changes don't break compilation
+  devops-build-validation:
+    needs: merge-and-conflict-check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout PR Code Base
+      uses: actions/checkout@v4
+
+    - name: Provision JDK 21 Build Environment
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Run Maven Devops Test Suite
+      run: |
+        echo "Executing clean compilation and automated assertions..."
+        mvn clean verify
+        
+    - name: Post-Build Health Assessment
+      run: echo "✅ DevOps pipeline successfully validated code stability."
+
