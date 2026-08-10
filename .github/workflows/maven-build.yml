@@ -3,9 +3,9 @@ name: Java CI with Maven
 # Trigger the workflow on pushes or pull requests to the main branch
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master","test" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "test" ]
 
 jobs:
   build:
