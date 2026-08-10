@@ -1,0 +1,31 @@
+# Target build directory (Compiled bytecode and JARs)
+target/
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA configuration files
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse IDE configuration files
+.metadata/
+.classpath
+.project
+.settings/
+*.launch
+
+# NetBeans IDE configuration folders
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
