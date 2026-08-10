@@ -28,7 +28,14 @@ jobs:
     - name: Build with Maven
       run: mvn clean package
 
-    # Step 4: Upload the compiled JAR file so you can download it from GitHub
+    # Step 4: Dynamically locate and run the generated JAR file
+    - name: Run Application
+      run: |
+        JAR_PATH=$(ls target/*.jar | grep -v "original-" | head -n 1)
+        echo "Running application: $JAR_PATH"
+        java -jar $JAR_PATH
+
+    # Step 5: Upload the compiled JAR file so you can download it from GitHub
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
