@@ -171,5 +171,4 @@ spec:
         ports:
         - containerPort: 80
 EOF
-\`\`\`
-EOF
+
