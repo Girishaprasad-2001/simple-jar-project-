@@ -135,3 +135,79 @@ pipeline {
 }
 ```
 
+# Jenkins Pipeline Syntax Reference
+
+A high-level comparison guide between Declarative and Scripted pipeline syntaxes used to write automation scripts in Jenkins.
+
+---
+
+The main difference between the two is that Declarative pipelines are modern, structured, and easy to read, while Scripted pipelines are older, flexible, and written in advanced code logic. Both achieve the same end goal (running your CI/CD steps), but they use completely different styles.
+
+---
+
+## 🆚 Direct Comparison Matrix
+
+| Feature | 📄 Declarative Pipeline | 💻 Scripted Pipeline |
+| :--- | :--- | :--- |
+| **Syntax Style** | Strict, structured configuration block | Imperative programming code logic |
+| **Language** | Jenkins DSL (Domain Specific Language) | Groovy Scripting Language |
+| **Learning Curve** | Easy (Highly recommended for beginners) | Hard (Requires programming experience) |
+| **Error Checking** | Validates structure before the build starts | Fails only when it hits the broken code layer |
+| **Flexibility** | Rigid structure (needs a `script {}` block for loops) | Unlimited flexibility (write any complex code) |
+| **Root Wrapper** | Starts with `pipeline { ... }` | Starts with `node { ... }` |
+
+---
+
+## 🔍 Syntax Example Side-by-Side
+
+Here is how you write the exact same Java build process using both formats:
+
+### Style A: Declarative Pipeline (Modern Standard)
+It uses a highly readable layout where sections must appear in a specific, predictable order.
+
+```groovy
+pipeline {
+    agent any // Must specify an agent globally
+    
+    stages {
+        stage('Compile') {
+            steps {
+                echo 'Building Java Project...'
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'mvn test'
+            }
+        }
+    }
+}
+```
+
+### Style B: Scripted Pipeline (Legacy Advanced)
+It treats the pipeline like a standard runtime script. It has no strict structural rules, meaning you can place your stages inside loops or conditional statements directly.
+
+```groovy
+node { // Defines the execution worker machine
+    
+    stage('Compile') {
+        echo 'Building Java Project...'
+        sh 'mvn clean package -DskipTests'
+    }
+    
+    stage('Test') {
+        // You can inject raw Java/Groovy code anywhere naturally
+        try {
+            sh 'mvn test'
+        } catch (Exception e) {
+            echo "Testing phase failed: \${e.getMessage()}"
+            currentBuild.result = 'FAILURE'
+            throw e
+        }
+    }
+}
+```
+
+
