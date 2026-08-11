@@ -89,18 +89,25 @@ docker run -d \
 
 ---
 
-## Step 4: Register JDK 21 Inside the Jenkins Web UI
+# Jenkins Agent Node Registration Guide
 
-Even if your containers are running Java 21, you must tell the Jenkins orchestration software where to locate the path to the Java installation.
+A step-by-step configuration guide for registering a permanent worker node inside the Jenkins Web User Interface.
 
-1. Open your web browser and go to your dashboard at `http://localhost:8080`.
-2. From the sidebar menu, click **Manage Jenkins ➡️ Tools**.
-3. Scroll down to the **JDK installations** configuration section and click **Add JDK**.
-4. Configure the settings:
-   * **Name**: `JDK21`
-   * **Uncheck** `Install automatically` (since it is already natively bundled into your Docker image).
-   * **JAVA_HOME**: `/opt/java/openjdk` *(This is the exact, standard system file path where Eclipse Temurin sets up Java inside official containers)*.
-5. Click **Save** at the bottom of the screen.
+---
+
+## Step 4: Register the Slave Node in the Web UI
+
+1. **Access the Dashboard**: Open your web browser and navigate to `http://localhost:8080`.
+2. **Initial Setup**: Paste your temporary administrator unlock token extracted from the container logs, click through **"Install suggested plugins"**, and create your primary admin account.
+3. **Navigate to Node Management**: From the dashboard sidebar menu on the left, click **Manage Jenkins ➡️ Nodes ➡️ New Node**.
+4. **Define the Node**: Configure the initialization parameters:
+   * **Node name**: `docker-agent`
+   * **Type**: `Permanent Agent`
+   * Click **Create**.
+5. **Configure Agent Options**: On the settings page, establish the following values:
+   * **Remote root directory**: `/home/jenkins/agent`
+   * **Launch method**: `Launch agent by connecting it to the controller`
+6. **Save Changes**: Click **Save** at the bottom of the screen to register your workspace.
 
 ---
 
