@@ -23,14 +23,14 @@ Since we previously built your build pipeline using GitHub Actions, it helps to 
 | **Maintenance** | Zero infrastructure overhead | Requires regular server patching and plugin updates |
 
 ### Continuous Integration:
-CI is the practice of automatically building and testing code every time a developer pushes changes to the repository.
+* CI is the practice of automatically building and testing code every time a developer pushes changes to the repository.
 ### Continuous delivery :
-CD is the practice of automatically preparing and delivering tested code to a staging or pre-production environment but requires manual approval before deploying to production.
+* CD is the practice of automatically preparing and delivering tested code to a staging or pre-production environment but requires manual approval before deploying to production.
 ### Continuous Deployment :
-CD is the practice of automatically deploying very code changes that passes all tests diretly to producation without any manual approval. 
+* CD is the practice of automatically deploying very code changes that passes all tests diretly to producation without any manual approval. 
 
 ### EX:
 CI -- automatically building and testing.
-CD -- automatically preparing and delivering 
-CD -- automatically deploying very code changes 
+CD -- automatically preparing and delivering.
+CD -- automatically deploying very code changes. 
 
