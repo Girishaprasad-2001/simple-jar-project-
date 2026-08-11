@@ -30,7 +30,7 @@ Since we previously built your build pipeline using GitHub Actions, it helps to 
 * CD is the practice of automatically deploying very code changes that passes all tests diretly to producation without any manual approval. 
 
 ### EX:
-CI -- automatically building and testing.
-CD -- automatically preparing and delivering.
-CD -- automatically deploying very code changes. 
+* CI -- automatically building and testing.
+* CD -- automatically preparing and delivering.
+* CD -- automatically deploying very code changes. 
 
