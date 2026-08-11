@@ -78,6 +78,8 @@ A comprehensive reference guide for managing local branches, undoing changes, sy
 
 `git merge` and `git rebase` are the two primary ways to integrate changes from one Git branch into another. While they achieve the same ultimate goal, they handle your project's commit history completely differently.
 
+*  **Git Merge** : Git merge combines two branches by creating a new merge commit that ties together the histories of both branchs.
+*  **Git rebase** : Git rebase moves or replay commits from pne branch on top of other branch creating a clean linear history.
 ### Git Merge: Combining Histories
 *   `git merge <branch-name>`: Integrates target branch updates into your active branch.
 *   **Merge Commits**: Creates a unique, dedicated commit linking both historical paths together.
